@@ -1,0 +1,42 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+mongodb:
+  auth:
+    enabled: true
+    rootUser: 'schoolapp'
+    rootPassword: 'mongoRootPass'
+  podSecurityContext:
+    fsGroup: ""
+    enabled: false
+  containerSecurityContext:
+    runAsUser: 1000760000
+
+schoolapp-frontend:
+  environment: 'openshift'
+  frontend:
+    image:
+      tag: 'openshift'
+
+# frontend.image.tag: either latest or openshift
+
+schoolapp-api:
+  environment: 'openshift'
+  vault:
+    status: 'kv_static_injector_template_file'
+    kind: 'injector'
+  CORS: http://schoolapp-schoolapp.apps-crc.testing
+
+# environment options: 'kubernetes' or 'openshift'
+# vault.status options:
+# vault.status: 'kv_static' # use kv secrets engine for vault aware apps (app talks to the Vault API)
+# vault.status: 'kv_static_injector_template_file' # use kv secrets engine for vault unaware apps (app uses reads secrets from a file on the file system)
+# vault.status: 'kv_static_csi' # use kv secrets engine with the vault CSI provider (used for vault unaware apps)
+# vault.status: '<any other value including disabled>' # use Hardcoded Values that appear in GitLab
+
+# vault.kind options:
+# vault.kind: 'injector' # uses the vault injector
+# vault.kind: 'csi' # uses the vault CSI provider
+# vault.kind: 'argocdplugin' # uses the ArgoCD Plugin
+# vault.kind: '<any other value including disabled>' will not rely on vault at all
+
