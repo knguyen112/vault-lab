@@ -7,10 +7,16 @@ mongodb:
     rootUser: 'schoolapp'
     rootPassword: 'mongoRootPass'
 
+# schoolapp-api:
+#   vault:
+#     status: 'disabled'
+#     kind: 'disabled'
+
 schoolapp-api:
   vault:
-    status: 'disabled'
-    kind: 'disabled'
+    status: 'kv_static_injector_template_file'
+    kind: 'injector'
+
 
 # schoolapp-api:
 #   vault:
